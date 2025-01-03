@@ -44,12 +44,30 @@ class WebSocketManager:
         self.ws = self.thread.ws
         self.thread.start()
         self.connected = True
-    def disconnect(self):
-        if self.ws:
-            self.ws.close()
-            self.ws = None
-            self.connected = False
 
+    def disconnect(self):
+        if not self.connected:
+            return
+        print("正在断开 WebSocket 连接...")
+        if self.ws:
+            try:
+                self.ws.close()
+                # 等待线程结束
+                if self.thread and self.thread.is_alive():
+                    self.thread.join(timeout=1)
+                # 确保连接已经关闭
+                if hasattr(self.ws, 'sock') and self.ws.sock:
+                    self.ws.sock.close()
+                self.ws = None
+                self.thread = None
+                self.connected = False
+                print("WebSocket 连接已断开")
+            except Exception as e:
+                print(f"关闭连接时出错: {e}")
+                # 即使出错也要重置状态
+                self.ws = None
+                self.thread = None
+                self.connected = False
 
     def send_message(self, message):
         if not self.connected:

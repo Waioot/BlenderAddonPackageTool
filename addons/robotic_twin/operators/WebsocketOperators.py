@@ -1,6 +1,6 @@
 import bpy
 import json
-from ..core.websocket_manager import get_websocket_manager, cleanup_websocket_manager
+from ..core.websocket_manager import get_websocket_manager
 
 # 获取全局websocket管理器
 ws_manager = get_websocket_manager()
@@ -38,16 +38,13 @@ class WSDisconnectOperator(bpy.types.Operator):
     bl_label = "Disconnect WebSocket"
     bl_idname = "robotic_twin.disconnect_websocket"
 
-    # 检查是否可以执行操作
     @classmethod
     def poll(cls, context: bpy.types.Context):
-        """
-        当已连接时，可以执行操作
-        """
         return ws_manager.connected
 
     def execute(self, context):
-        cleanup_websocket_manager()
+        # 断开连接
+        ws_manager.disconnect()
         return {'FINISHED'}
 
 # 随机移动物体
