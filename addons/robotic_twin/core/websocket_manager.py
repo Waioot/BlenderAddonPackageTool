@@ -39,7 +39,7 @@ class WebSocketManager:
             'on_close': self.on_close,
             'on_open': self.on_open
         }
-        
+        print(url)
         self.thread = WebSocketThread(url, handlers)
         self.ws = self.thread.ws
         self.thread.start()

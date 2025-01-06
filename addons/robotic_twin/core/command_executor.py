@@ -12,8 +12,8 @@ class CommandExecutor:
         print(f"Received command: {message}")
 
         # 执行命令
-        if 'action' in message:
-            if message['action'] == 0:
+        if "action" in message:
+            if message["action"] == 0:
                 if CommandExecutor.move_cube_randomly(message):
                     print("Command executed successfully")
                 else:

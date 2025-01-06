@@ -53,7 +53,6 @@ class WSSenderRandom(bpy.types.Operator):
     随机移动物体
     发送命令：{"action": 0}
     服务端返回: x , y , z
-    执行命令: bpy.ops.object.move(x=x, y=y, z=z)
     '''
     bl_label = "Move Cube Randomly"
     bl_idname = "robotic_twin.move_cube_random"
